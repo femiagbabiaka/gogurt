@@ -14,7 +14,7 @@ func main() {
 	m := map[string]func() string {
 		"branch":         branch,
 		"checkout":       checkout,
-		"pull request":   pullRequest,
+		"pull-request":   pullRequest,
 	}
 
 	realCommand, commandExists := m[command]
@@ -35,15 +35,17 @@ func help() string {
 	Gogurt is a git wrapper written in Golang.
 	Commands:
 		help: return a list of commands.
+
 		branch: Takes a single argument of a branch name, will create a branch if one doesn't exist.
+
 		checkout: Will take a single argument, and either switch to the branch whose name matches the input string most closely, 
 		or return a nice list of branch names to then switch to.
+
 		pull request: Takes two arguments, the first being the branch you want to open the Github.com pull request for, 
 		and the second being the upstream branch you want to target. Opens a browser window so you can more easily finish your pull requests.`
 	return helpOutput
-
-
 }
+
 func checkout() string {
 	return "checkout"
 }
@@ -53,6 +55,15 @@ func branch() string {
 }
 
 func pullRequest() string {
+	if len(os.Args) < 4 {
+		fmt.Println("\x1b[37;1m" + "You need to pass both the branch that you want to pull and the one that you want to pull into." + "\x1b[0m")
+		fmt.Println("\x1b[37;1m" + "Ex: `gogurt pull-request femiagbabiaka/master femiagbabiaka/bugfix-xyz`" + "\x1b[0m")
+		os.Exit(1)
+	}
+
+	branchToPull = os.Args[3]
+	branchToPullInto = os.Args[4}
+
 	return "pullRequest"
 }
 
