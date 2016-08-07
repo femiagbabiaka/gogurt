@@ -11,10 +11,11 @@ func main() {
 	}
 	command := os.Args[1]
 
-	m := map[string]func() string {
-		"branch":         branch,
-		"checkout":       checkout,
-		"pull-request":   pullRequest,
+	m := map[string]func() string{
+		"branch":           branch,
+		"checkout":         checkout,
+		"pull-request":     pullRequest,
+		"capture-branches": captureBranches,
 	}
 
 	realCommand, commandExists := m[command]
@@ -61,8 +62,8 @@ func pullRequest() string {
 		os.Exit(1)
 	}
 
-	branchToPull = os.Args[3]
-	branchToPullInto = os.Args[4}
+	//branchToPull := os.Args[3]
+	//branchToPullInto := os.Args[4]
 
 	return "pullRequest"
 }
@@ -83,5 +84,3 @@ func captureBranches() string {
 
 	return string(cmdOut)
 }
-
-
