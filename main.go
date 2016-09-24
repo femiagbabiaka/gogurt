@@ -1,34 +1,14 @@
 package main
 
-import "fmt"
-import "os"
-import "os/exec"
+import (
+	"fmt"
+	"github.com/femiagbabiaka/gopr"
+	"os"
+	"os/exec"
+)
 
 func main() {
-	if len(os.Args) < 2 {
-		fmt.Println("\x1b[37;1m" + help() + "\x1b[0m")
-		os.Exit(0)
-	}
-	command := os.Args[1]
-
-	m := map[string]func() string{
-		"branch":           branch,
-		"checkout":         checkout,
-		"pull-request":     pullRequest,
-		"capture-branches": captureBranches,
-	}
-
-	realCommand, commandExists := m[command]
-	if commandExists != true {
-		fmt.Println("The command " + command + " doesn't exist.")
-		fmt.Println("\x1b[37;1m" + help() + "\x1b[0m")
-		os.Exit(1)
-	}
-
-	response := realCommand()
-
-	fmt.Println(response)
-
+	gogurtPullRequest()
 }
 
 func help() string {
@@ -53,19 +33,6 @@ func checkout() string {
 
 func branch() string {
 	return "branch"
-}
-
-func pullRequest() string {
-	if len(os.Args) < 4 {
-		fmt.Println("\x1b[37;1m" + "You need to pass both the branch that you want to pull and the one that you want to pull into." + "\x1b[0m")
-		fmt.Println("\x1b[37;1m" + "Ex: `gogurt pull-request femiagbabiaka/master femiagbabiaka/bugfix-xyz`" + "\x1b[0m")
-		os.Exit(1)
-	}
-
-	//branchToPull := os.Args[3]
-	//branchToPullInto := os.Args[4]
-
-	return "pullRequest"
 }
 
 func currentBranch() string {
